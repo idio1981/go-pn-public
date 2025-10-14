@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"go-pn-public/logger"
+	"github.com/idio1981/go-pn-public/logger"
 
 	"github.com/juju/fslock"
 	"github.com/spf13/cobra"

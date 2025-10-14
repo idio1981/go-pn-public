@@ -1,4 +1,4 @@
-module go-pn-public
+module github.com/idio1981/go-pn-public
 
 go 1.24.2
 
