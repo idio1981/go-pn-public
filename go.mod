@@ -3,6 +3,7 @@ module github.com/idio1981/go-pn-public
 go 1.21
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/juju/fslock v0.0.0-20160525022230-4d5c94c67b4b
 	github.com/spf13/cobra v1.10.1
 )
