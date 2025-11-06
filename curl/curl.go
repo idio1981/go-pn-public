@@ -12,13 +12,13 @@ import (
 	"github.com/idio1981/go-pn-public/logger"
 )
 
-func AutoUpload(url string, file string, md5 string, retry int) error {
+func AutoUpload(url string, file string, retry int, options *map[string]string) error {
 	curTry := 0
 	for curTry <= retry {
 		logger.Info("curl upload try: %d, %s", curTry, url)
 
 		curTry++
-		_, err := Upload(url, file, nil)
+		_, err := Upload(url, file, options)
 		if err == nil {
 			return nil
 		}
@@ -30,14 +30,16 @@ func AutoUpload(url string, file string, md5 string, retry int) error {
 	return fmt.Errorf("curl upload failed: %s", url)
 }
 
-func AutoDownload(url string, savePath string, md5 string, retry int) error {
-	if _, err := os.Stat(savePath); err == nil {
-		md5file, err := fo.Md5(savePath)
-		if err != nil {
-			return err
-		}
-		if md5 == md5file {
-			return nil
+func AutoDownload(url string, savePath string, md5 string, retry int, options *map[string]string) error {
+	if md5 != "" {
+		if _, err := os.Stat(savePath); err == nil {
+			md5file, err := fo.Md5(savePath)
+			if err != nil {
+				return err
+			}
+			if md5 == md5file {
+				return nil
+			}
 		}
 	}
 
@@ -46,7 +48,7 @@ func AutoDownload(url string, savePath string, md5 string, retry int) error {
 		logger.Info("curl download try: %d, %s", curTry, url)
 
 		curTry++
-		opts := map[string]string{}
+		opts := *options
 		fi, err := os.Stat(savePath)
 		if err == nil {
 			opts["-C"] = strconv.FormatInt(fi.Size(), 10)
@@ -55,6 +57,10 @@ func AutoDownload(url string, savePath string, md5 string, retry int) error {
 		_, err = Download(url, savePath, &opts)
 		if err != nil {
 			continue
+		}
+
+		if md5 == "" {
+			return nil
 		}
 
 		md5file, err := fo.Md5(savePath)
