@@ -48,13 +48,13 @@ func AutoDownload(url string, savePath string, md5 string, retry int, options *m
 		logger.Info("curl download try: %d, %s", curTry, url)
 
 		curTry++
-		opts := *options
+		opts := options
 		fi, err := os.Stat(savePath)
-		if err == nil {
-			opts["-C"] = strconv.FormatInt(fi.Size(), 10)
+		if err == nil && opts != nil {
+			(*opts)["-C"] = strconv.FormatInt(fi.Size(), 10)
 		}
 
-		_, err = Download(url, savePath, &opts)
+		_, err = Download(url, savePath, opts)
 		if err != nil {
 			continue
 		}
