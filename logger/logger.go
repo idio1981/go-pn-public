@@ -25,12 +25,12 @@ type Logger struct {
 	executor *log.Logger
 }
 
-func (logger *Logger) funcName() string {
-	pc, _, _, _ := runtime.Caller(1)
-	return runtime.FuncForPC(pc).Name()
-}
+// func (logger *Logger) funcName() string {
+// 	pc, _, _, _ := runtime.Caller(1)
+// 	return runtime.FuncForPC(pc).Name()
+// }
 
-func (logger *Logger) output(level int, prefix string, format string, v ...interface{}) {
+func (logger *Logger) Output(level int, prefix string, format string, v ...interface{}) {
 	if level > logger.level {
 		return
 	}
@@ -82,27 +82,27 @@ var (
 // Error print log with level Error.
 func Error(format string, v ...interface{}) {
 	// stdLogger.output(LevelError, "\033[31;1m[E]", GenerateFmtStr(len(v)), v...)
-	stdLogger.output(LevelError, "\033[31;1m[E]", format, v...)
+	stdLogger.Output(LevelError, "\033[31;1m[E]", format, v...)
 }
 
 // Warn print log with level Warn.
 func Warn(format string, v ...interface{}) {
-	stdLogger.output(LevelWarning, "\033[33;1m[W]", format, v...)
+	stdLogger.Output(LevelWarning, "\033[33;1m[W]", format, v...)
 }
 
 // Info print log with level Info.
 func Info(format string, v ...interface{}) {
-	stdLogger.output(LevelInfo, "\033[0;1m[I]", format, v...)
+	stdLogger.Output(LevelInfo, "\033[0;1m[I]", format, v...)
 }
 
 // Success print log with level Success.
 func Success(format string, v ...interface{}) {
-	stdLogger.output(LevelSuccess, "\033[32;1m[I]", format, v...)
+	stdLogger.Output(LevelSuccess, "\033[32;1m[I]", format, v...)
 }
 
 // Debug print log with level Debug.
 func Debug(format string, v ...interface{}) {
-	stdLogger.output(LevelDebug, "\033[0m[D]", format, v...)
+	stdLogger.Output(LevelDebug, "\033[0m[D]", format, v...)
 }
 
 // Panic print log and exit.
