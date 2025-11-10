@@ -79,6 +79,10 @@ var (
 	stdLogger = New()
 )
 
+func (log *Logger) SetLevel(level int) {
+	log.level = level
+}
+
 // Error print log with level Error.
 func Error(format string, v ...interface{}) {
 	// stdLogger.output(LevelError, "\033[31;1m[E]", GenerateFmtStr(len(v)), v...)
