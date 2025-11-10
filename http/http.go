@@ -35,7 +35,7 @@ func Post(url string, body io.Reader) (int, string, error) {
 	// Make the HTTP POST request
 	resp, err := client.Post(url, "application/json", body)
 	if err != nil {
-		logger.Error("Error making POST request:", err)
+		logger.Error("Error making POST request: %s", err)
 		return 0, "", err
 	}
 	defer resp.Body.Close()
@@ -43,7 +43,7 @@ func Post(url string, body io.Reader) (int, string, error) {
 	// Read the response body
 	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
-		logger.Error("Error reading response body:", err)
+		logger.Error("Error reading response body: %s", err)
 		return 0, "", err
 	}
 

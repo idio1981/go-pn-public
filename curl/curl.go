@@ -84,7 +84,7 @@ func Upload(url string, file string, options *map[string]string) (string, error)
 	opts := []string{}
 	if options != nil {
 		for k, v := range *options {
-			opts = append(opts, "-"+k, v)
+			opts = append(opts, k, v)
 		}
 	}
 
@@ -105,7 +105,7 @@ func Download(url string, savePath string, options *map[string]string) (string, 
 	opts := []string{}
 	if options != nil {
 		for k, v := range *options {
-			opts = append(opts, "-"+k, v)
+			opts = append(opts, k, v)
 		}
 	}
 
