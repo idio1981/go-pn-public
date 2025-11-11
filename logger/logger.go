@@ -96,7 +96,7 @@ func Warn(format string, v ...interface{}) {
 
 // Info print log with level Info.
 func Info(format string, v ...interface{}) {
-	stdLogger.Output(LevelInfo, "\033[97;1m[I]", format, v...)
+	stdLogger.Output(LevelInfo, "\033[39;1m[I]", format, v...)
 }
 
 // Success print log with level Success.
