@@ -88,7 +88,11 @@ func Upload(url string, file string, options *map[string]string) (string, error)
 		}
 	}
 
-	opts = append(opts, "-F", "file=@"+file, url)
+	if file != "" {
+		opts = append(opts, "-F", "file=@"+file)
+	}
+
+	opts = append(opts, url)
 	cmd := exec.Command("curl", opts...)
 
 	output, err := cmd.CombinedOutput()
