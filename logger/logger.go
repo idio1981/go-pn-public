@@ -96,17 +96,17 @@ func Warn(format string, v ...interface{}) {
 
 // Info print log with level Info.
 func Info(format string, v ...interface{}) {
-	stdLogger.Output(LevelInfo, "\033[0;1m[I]", format, v...)
+	stdLogger.Output(LevelInfo, "\033[97;1m[I]", format, v...)
 }
 
 // Success print log with level Success.
 func Success(format string, v ...interface{}) {
-	stdLogger.Output(LevelSuccess, "\033[32;1m[I]", format, v...)
+	stdLogger.Output(LevelSuccess, "\033[32;1m[S]", format, v...)
 }
 
 // Debug print log with level Debug.
 func Debug(format string, v ...interface{}) {
-	stdLogger.Output(LevelDebug, "\033[0m[D]", format, v...)
+	stdLogger.Output(LevelDebug, "\033[37;2m[D]", format, v...)
 }
 
 // Panic print log and exit.

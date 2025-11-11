@@ -44,3 +44,12 @@ func TestCURLDownload(t *testing.T) {
 	logger.Success("download success: %s", savePath)
 
 }
+
+func TestColors(t *testing.T) {
+	perpare()
+	logger.Success("Success: %s", "Success")
+	logger.Info("Info: %s", "Info")
+	logger.Warn("Warn: %s", "Warn")
+	logger.Error("Error: %s", "Error")
+	logger.Debug("Debug: %s", "Debug")
+}
