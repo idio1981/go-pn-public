@@ -33,7 +33,7 @@ func AutoUpload(ctx context.Context, url string, file string, retry int, options
 			return err
 		}
 
-		logger.Info("curl upload try: %d, %s", curTry, url)
+		logger.Debug("curl upload try: %d, %s", curTry, url)
 
 		curTry++
 		_, err := Upload(ctx, url, file, options)
@@ -70,7 +70,7 @@ func AutoDownload(ctx context.Context, url string, savePath string, md5 string, 
 			return err
 		}
 
-		logger.Info("curl download try: %d, %s", curTry, url)
+		logger.Debug("curl download try: %d, %s", curTry, url)
 
 		curTry++
 		opts := options

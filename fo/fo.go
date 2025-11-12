@@ -55,3 +55,16 @@ func Sha256(path string) (string, error) {
 	}
 	return fmt.Sprintf("%x", hash.Sum(nil)), nil
 }
+
+func FormatSize(size int64) string {
+	if size < 1024 {
+		return fmt.Sprintf("%d B", size)
+	}
+	if size < 1024*1024 {
+		return fmt.Sprintf("%d KB", size/1024)
+	}
+	if size < 1024*1024*1024 {
+		return fmt.Sprintf("%d MB", size/1024/1024)
+	}
+	return fmt.Sprintf("%d GB", size/1024/1024/1024)
+}
