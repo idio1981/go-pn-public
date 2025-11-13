@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/idio1981/go-pn-public/fo"
@@ -127,6 +128,7 @@ func Upload(ctx context.Context, url string, file string, options *map[string]st
 	}
 
 	opts = append(opts, url)
+	logger.Debug("curl %s", strings.Join(opts, " "))
 	cmd := exec.CommandContext(ctx, "curl", opts...)
 
 	output, err := cmd.CombinedOutput()
@@ -148,6 +150,7 @@ func Download(ctx context.Context, url string, savePath string, options *map[str
 	}
 
 	opts = append(opts, "-o", savePath, url)
+	logger.Debug("curl %s", strings.Join(opts, " "))
 	cmd := exec.CommandContext(ctx, "curl", opts...)
 
 	output, err := cmd.CombinedOutput()
