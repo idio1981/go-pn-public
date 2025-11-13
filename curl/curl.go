@@ -76,7 +76,7 @@ func AutoDownload(ctx context.Context, url string, savePath string, md5 string, 
 		curTry++
 		opts := options
 		fi, err := os.Stat(savePath)
-		if err == nil && opts != nil {
+		if err == nil && opts != nil && fi.Size() > 0 {
 			(*opts)["-C"] = strconv.FormatInt(fi.Size(), 10)
 		}
 
@@ -119,6 +119,11 @@ func Upload(ctx context.Context, url string, file string, options *map[string]st
 	opts := []string{}
 	if options != nil {
 		for k, v := range *options {
+			if v == "" {
+				opts = append(opts, k)
+				continue
+			}
+
 			opts = append(opts, k, v)
 		}
 	}
@@ -145,6 +150,11 @@ func Download(ctx context.Context, url string, savePath string, options *map[str
 	opts := []string{}
 	if options != nil {
 		for k, v := range *options {
+			if v == "" {
+				opts = append(opts, k)
+				continue
+			}
+
 			opts = append(opts, k, v)
 		}
 	}
