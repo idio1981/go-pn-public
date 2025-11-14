@@ -2,6 +2,7 @@ package test
 
 import (
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -62,6 +63,25 @@ func TestCURLDownload(t *testing.T) {
 	}
 
 	logger.Success("download success: %s", savePath)
+
+}
+
+func TestCURLDownload2(t *testing.T) {
+	perpare()
+	ctx, _ := context.WithCancel(context.Background())
+	uri := fmt.Sprintf("https://api.appstoreconnect.apple.com/v1/financeReports?filter[reportDate]=%s&filter[reportType]=FINANCE_DETAIL&filter[regionCode]=Z1&filter[vendorNumber]=%s", "2025-09", "87349754")
+	err := curl.AutoDownload(ctx, uri, "/Users/muzi/Downloads/financeReport.zip", "", 3, &map[string]string{
+		"--location": "",
+		"--globoff":  "",
+		"--header":   fmt.Sprintf("Authorization: Bearer %s", "eyJhbGciOiJFUzI1NiIsImtpZCI6IjQ0Wlo1NlY2RlUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhcHBzdG9yZWNvbm5lY3QtdjEiLCJleHAiOjE3NjMwMDMzMTgsImlhdCI6MTc2MzAwMjExOCwiaXNzIjoiNjlhNmRlOTAtNWE0ZC00N2UzLWUwNTMtNWI4YzdjMTFhNGQxIn0.9e0nCqMlAWhnmxMdyxtaXPepyiLx4yhjt5hkmxoPygHqCbXp7iXWyDWHREtNFYzv5W2-5nON0cFEnVUjoSa0cA"),
+	})
+
+	if err != nil {
+		logger.Error("download failed: %v", err)
+		return
+	}
+
+	logger.Success("download success: %s", "/Users/muzi/Downloads/financeReport.zip")
 
 }
 
