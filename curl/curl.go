@@ -27,29 +27,29 @@ func detectContextCancel(ctx context.Context) error {
 	}
 }
 
-func AutoUpload(ctx context.Context, url string, file string, retry int, options *map[string]string) error {
+func AutoUpload(ctx context.Context, url string, file string, retry int, options *map[string]string) (string, error) {
 	curTry := 0
 	for curTry <= retry {
 		if err := detectContextCancel(ctx); err != nil {
-			return err
+			return "", err
 		}
 
 		logger.Debug("curl upload try: %d, %s", curTry, url)
 
 		curTry++
-		_, err := Upload(ctx, url, file, options)
+		output, err := Upload(ctx, url, file, options)
 		if err == nil {
-			return nil
+			return output, nil
 		}
 
 		if err := detectContextCancel(ctx); err != nil {
-			return err
+			return "", err
 		}
 		time.Sleep(1 * time.Second)
 	}
 
 	logger.Error("curl upload failed: %s, retry: %d", url, retry)
-	return fmt.Errorf("curl upload failed: %s", url)
+	return "", fmt.Errorf("curl upload failed: %s", url)
 }
 
 func AutoDownload(ctx context.Context, url string, savePath string, md5 string, retry int, options *map[string]string) error {
@@ -159,7 +159,7 @@ func Download(ctx context.Context, url string, savePath string, options *map[str
 		}
 	}
 
-	opts = append(opts, "-o", savePath, url)
+	opts = append(opts, "-f", "-o", savePath, url)
 	logger.Debug("curl %s", strings.Join(opts, " "))
 	cmd := exec.CommandContext(ctx, "curl", opts...)
 
